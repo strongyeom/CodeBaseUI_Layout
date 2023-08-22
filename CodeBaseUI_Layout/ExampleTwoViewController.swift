@@ -6,24 +6,136 @@
 //
 
 import UIKit
+import SnapKit
 
 class ExampleTwoViewController: UIViewController {
-
+    
+    let backImageView = {
+        let image = UIImageView()
+        image.backgroundColor = .yellow
+        image.contentMode = .scaleToFill
+        return image
+    }()
+    
+    let lineView = {
+       let view = UIView()
+        view.backgroundColor = .red
+        return view
+    }()
+    
+    let elementButton = {
+        let button = UIButton()
+        button.configuration = configureButton(title: "예시 1")
+        return button
+    }()
+    
+    let element2Button = {
+        let button = UIButton()
+        button.configuration = configureButton(title: "예시 2")
+        return button
+    }()
+    
+    let element3Button = {
+        let button = UIButton()
+        button.configuration = configureButton(title: "예시 3")
+        return button
+    }()
+    
+    
+    lazy var elementStackView = {
+        let stack = UIStackView(arrangedSubviews: [elementButton, element2Button, element3Button])
+        stack.axis = .horizontal
+        stack.spacing = 20
+        stack.alignment = .fill
+        stack.distribution = .fillEqually
+        return stack
+    }()
+    
+    let posterImage = {
+       let image = UIImageView()
+       // image.frame.size = CGSize(width: 100, height: 100)
+        image.backgroundColor = .green
+        image.layer.cornerRadius = 100 / 2
+        image.clipsToBounds = true
+        return image
+    }()
+    
+    let posterLabel = {
+       let label = UILabel()
+        label.textColor = .green
+        label.text = "안녕하세요"
+        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        return label
+    }()
+    
+    lazy var posterStackView = {
+       let stack = UIStackView(arrangedSubviews: [posterImage, posterLabel])
+        stack.axis = .vertical
+        stack.spacing = 5
+        stack.alignment = .center
+        stack.distribution = .fill
+        return stack
+    }()
+    
+    
+    
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = .yellow
+        setup()
     }
     
+    func setup() {
+        [backImageView, elementStackView, lineView, posterStackView].forEach {
+            view.addSubview($0)
+        }
+        
+        backImageView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        
+        elementStackView.snp.makeConstraints { make in
+            make.bottom.horizontalEdges.equalTo(view).inset(40)
+        }
+        
+        lineView.snp.makeConstraints { make in
+            make.bottom.equalTo(elementStackView.snp.top).inset(-20)
+            make.horizontalEdges.equalTo(view).inset(20)
+            make.height.equalTo(2)
+        }
+        
+        posterImage.snp.makeConstraints { make in
+            make.width.height.equalTo(100)
+        }
+        
+        posterStackView.snp.makeConstraints { make in
+            make.centerX.equalTo(view)
+            make.bottom.equalTo(lineView.snp.top).offset(-30)
+        }
+        
+        
+        
+        
     }
-    */
+    
+    static func configureButton(title: String) -> UIButton.Configuration {
+        var config = UIButton.Configuration.bordered()
+        config.baseForegroundColor = .blue
+        //let imageConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .light)
+        
+        config.title = title
+        config.imagePlacement = .top
+        config.imagePadding = 5
+        // UIButtonConfiguration에서 이미지 사이즈 조절
+        config.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 30)
+        config.buttonSize = .large
+        config.image = UIImage(systemName: "flame")
+        return config
+    }
 
 }
