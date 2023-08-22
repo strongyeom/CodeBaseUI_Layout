@@ -55,7 +55,6 @@ class ExampleTwoViewController: UIViewController {
        let image = UIImageView()
        // image.frame.size = CGSize(width: 100, height: 100)
         image.backgroundColor = .green
-        image.layer.cornerRadius = image.frame.width / 2
         image.clipsToBounds = true
         return image
     }()
@@ -77,19 +76,52 @@ class ExampleTwoViewController: UIViewController {
         return stack
     }()
     
-    
-
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupNavi()
         setup()
     }
+    
+    func setupNavi() {
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(backButtonClicked(_:)))
+        
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(image: UIImage(systemName: "doc.fill"), style: .plain, target: self, action: #selector(rightThirdBarButtonClicked(_:))),
+            UIBarButtonItem(image: UIImage(systemName: "book.fill"), style: .plain, target: self, action: #selector(rightSecondBarButtonClicked(_:))),
+            UIBarButtonItem(image: UIImage(systemName: "flame"), style: .plain, target: self, action: #selector(rightFirstBarButtonClicked(_:))),
+        ]
+    }
+    
+    @objc func backButtonClicked(_ sender: UIBarButtonItem) {
+        print("왼쪽 바 버튼 아이템 눌림 ")
+        dismiss(animated: true)
+    }
+    
+    @objc func rightFirstBarButtonClicked(_ sender: UIBarButtonItem) {
+        print("첫번째 버튼 눌림")
+        
+    }
+    
+    @objc func rightSecondBarButtonClicked(_ sender: UIBarButtonItem) {
+        print("두번째 버튼 눌림")
+        
+    }
+    
+    @objc func rightThirdBarButtonClicked(_ sender: UIBarButtonItem) {
+        print("세번째 버튼 눌림")
+        
+    }
+    
+    
+    
+    
     func setup() {
         [backImageView, elementStackView, lineView, posterStackView].forEach {
             view.addSubview($0)
         }
         
+        // 프로퍼티가 생성되고 나서 cornerRadius를 처리해야 circle을 만들 수 있다.
         DispatchQueue.main.async {
             self.posterImage.layer.cornerRadius = self.posterImage.frame.width / 2
         }

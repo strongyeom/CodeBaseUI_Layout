@@ -28,7 +28,9 @@ class ViewController: UIViewController {
             navigationController?.pushViewController(vc, animated: true)
         case .Example2:
             let vc = ExampleTwoViewController()
-            navigationController?.pushViewController(vc, animated: true)
+            let nav = UINavigationController(rootViewController: vc)
+            nav.modalPresentationStyle = .fullScreen
+            present(nav, animated: true)
         case .Example3:
             let vc = ExampleThreeViewController()
             navigationController?.pushViewController(vc, animated: true)
