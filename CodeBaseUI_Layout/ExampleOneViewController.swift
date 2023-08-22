@@ -61,6 +61,7 @@ class ExampleOneViewController: UIViewController {
     }
     
     func setup() {
+        print("첫번째 프로젝트 화면")
         [topView, stackView, bottomView].forEach {
             view.addSubview($0)
         }
