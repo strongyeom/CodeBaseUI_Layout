@@ -55,7 +55,7 @@ class ExampleTwoViewController: UIViewController {
        let image = UIImageView()
        // image.frame.size = CGSize(width: 100, height: 100)
         image.backgroundColor = .green
-        image.layer.cornerRadius = 100 / 2
+        image.layer.cornerRadius = image.frame.width / 2
         image.clipsToBounds = true
         return image
     }()
@@ -78,19 +78,20 @@ class ExampleTwoViewController: UIViewController {
     }()
     
     
-    
-    
-    
+
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
     }
-    
     func setup() {
         [backImageView, elementStackView, lineView, posterStackView].forEach {
             view.addSubview($0)
+        }
+        
+        DispatchQueue.main.async {
+            self.posterImage.layer.cornerRadius = self.posterImage.frame.width / 2
         }
         
         backImageView.snp.makeConstraints { make in
